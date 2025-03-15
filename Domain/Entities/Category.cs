@@ -4,8 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain.Entities
 {
     [Table("Category")]
-    internal class Category : BaseEntity
+    public sealed class Category : BaseEntity
     {
-        public ICollection<Product> Products { get; set; }
+        public Category(string name) : base(name) { }
+
+        public ICollection<Product> Products { get; private set; }
     }
 }

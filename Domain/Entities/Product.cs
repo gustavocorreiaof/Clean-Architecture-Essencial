@@ -1,18 +1,46 @@
 ﻿using Domain.Entities.Base;
+using Domain.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entities
 {
     [Table("Product")]
-    internal class Product : BaseEntity
+    public sealed class Product : BaseEntity
     {
-        public string Description { get; set; }
-        public decimal Price  { get; set; }
-        public int Stock { get; set; }
-        public string Image { get; set; }
+        public Product(string name, string description, decimal price, int stock, string image) : base(name)
+        {
+            ValidateName(name);
+            Validate(description, price, stock, image);
+        }
+
+        public string Description { get; private set; }
+        public decimal Price { get; private set; }
+        public int Stock { get; private set; }
+        public string Image { get; private set; }
 
         [ForeignKey("Category")]
         public Guid CategoryId { get; set; }
         public Category Category { get; set; }
+
+        private void Validate(string desciption, decimal price, int stock, string image)
+        {
+            ExceptionValidation.When(string.IsNullOrEmpty(desciption), "Description is required.");
+            ExceptionValidation.When(desciption.Length < 5, "Description must be 5 caracters or more.");
+            ExceptionValidation.When(price < 0, "Price must be grather than zero.");
+            ExceptionValidation.When(stock < 0, "Stock must be grather than zero.");
+            ExceptionValidation.When(image.Length > 250, "Image must be 250 caracters maximum.");
+
+            Description = desciption;
+            Price = price;
+            Stock = stock;
+            Image = image;
+        }
+
+        public void Update(string name, string description, decimal price, int stock, string image, Guid categoryId)
+        {
+            ValidateName(name);
+            Validate(description, price, stock, image);
+            CategoryId = categoryId;
+        }
     }
 }
