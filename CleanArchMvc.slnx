@@ -3,5 +3,6 @@
   <Project Path="Domain/Domain.csproj" Id="f97380a4-fc14-4608-9354-ac0a67bf1b3c" />
   <Project Path="Infra.Data/Infra.Data.csproj" Id="ae3038e0-1aee-4ddf-99d6-c2b253ddad2c" />
   <Project Path="Infra.IoC/Infra.IoC.csproj" Id="05144e89-73f0-4503-b54c-936ce5c5153b" />
+  <Project Path="Tests/Tests.csproj" Id="65ab5627-b84f-47fc-b145-b08eab28a3ff" />
   <Project Path="WebUI/WebUI.csproj" Id="d224a995-b6e2-44c2-b725-0d2be9cc3c5e" />
 </Solution>
