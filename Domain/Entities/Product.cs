@@ -29,7 +29,7 @@ namespace Domain.Entities
             ExceptionValidation.When(desciption.Length < 5, "Description must be 5 caracters or more.");
             ExceptionValidation.When(price < 0, "Price must be grather than zero.");
             ExceptionValidation.When(stock < 0, "Stock must be grather than zero.");
-            ExceptionValidation.When(image.Length > 250, "Image must be 250 caracters maximum.");
+            ExceptionValidation.When(image?.Length > 250, "Image must be 250 caracters maximum.");
 
             Description = desciption;
             Price = price;
