@@ -20,7 +20,7 @@ namespace Infra.Data.Repositories
             return product;
         }
 
-        public async Task<IEnumerable<Product>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Product>> GetAllProductAsync()
         {
             return await _context.products.ToListAsync();
         }
