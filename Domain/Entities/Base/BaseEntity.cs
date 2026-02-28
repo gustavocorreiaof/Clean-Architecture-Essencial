@@ -4,26 +4,18 @@ namespace Domain.Entities.Base
 {
     public abstract class BaseEntity
     {
-        public BaseEntity(string name)
+        protected BaseEntity(Guid id)
         {
-            ValidateName(name);
+            ValidateId(id);
+            Id = id;
         }
 
         public Guid Id { get; private set; }
-        public string Name { get; private set; }
 
-        public void ValidateName(string name)
+        public void ValidateId(Guid id)
         {
-            ExceptionValidation.When(string.IsNullOrEmpty(name), "The name is required." );
-
-            ExceptionValidation.When(name.Length < 3, "The name must be 3 caracters or more.");
-
-            Name = name;
-        }
-
-        public void Update(string name)
-        {
-            ValidateName(name);
+            ExceptionValidation.When(id == Guid.Empty, "The Id is required.");
+            Id = id;
         }
     }
 }
