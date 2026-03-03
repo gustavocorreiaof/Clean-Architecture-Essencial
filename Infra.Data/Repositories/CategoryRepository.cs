@@ -16,7 +16,7 @@ namespace Infra.Data.Repositories
 
         public async Task<Category> CreateAsync(Category category)
         {
-            _context.Add(category);
+            _context.categories.Add(category);
             await _context.SaveChangesAsync();
             return category;
         }
