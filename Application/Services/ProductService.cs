@@ -22,6 +22,7 @@ namespace Application.Services
 
         public async Task CreateProductAsync(ProductDTO productDto)
         {
+            productDto.Id = Guid.NewGuid();
             ProductCreateCommand productCreateCommand = _mapper.Map<ProductCreateCommand>(productDto) ?? throw new Exception("ProductCreateCommand is null");
             
             await _mediator.Send(productCreateCommand);            

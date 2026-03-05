@@ -14,7 +14,7 @@ namespace Infra.IoC
     {
         public static IServiceCollection AddInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options => 
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Environment.GetEnvironmentVariable("DEV_DB"),
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
@@ -27,6 +27,7 @@ namespace Infra.IoC
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddAutoMapper(cfg => {
                 cfg.AddProfile<DomainToDTOMappingProfile>();
+                cfg.AddProfile<DTOToCommandMappingProfile>();
             });
 
             return services;
