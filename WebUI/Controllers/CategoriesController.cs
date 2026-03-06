@@ -37,5 +37,42 @@ namespace WebUI.Controllers
 
             return View(categoryDTO);
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CategoryDTO categoryDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    await _categoryService.UpdateCategoryAsync(categoryDTO);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(categoryDTO);
+        }
     }
 }
