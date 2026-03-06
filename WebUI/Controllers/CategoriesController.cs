@@ -98,5 +98,22 @@ namespace WebUI.Controllers
             await _categoryService.RemoveCategoryAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet()]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryDTO);
+        }
     }
 }
