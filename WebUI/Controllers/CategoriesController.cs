@@ -68,11 +68,35 @@ namespace WebUI.Controllers
                 {
                     throw;
                 }
-                
+
                 return RedirectToAction(nameof(Index));
             }
 
             return View(categoryDTO);
+        }
+
+        [HttpGet()]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            if (id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            var categoryDTO = await _categoryService.GetByIdAsync(id);
+            if (categoryDTO == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryDTO);
+        }
+
+        [HttpPost(), ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        {
+            await _categoryService.RemoveCategoryAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
