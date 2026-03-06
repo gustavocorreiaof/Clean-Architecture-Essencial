@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
   <Project Path="Application/Application.csproj" Id="baad10cb-e67d-45e5-b578-71d82e86b2de" />
   <Project Path="Domain/Domain.csproj" Id="f97380a4-fc14-4608-9354-ac0a67bf1b3c" />
   <Project Path="Infra.Data/Infra.Data.csproj" Id="ae3038e0-1aee-4ddf-99d6-c2b253ddad2c" />
