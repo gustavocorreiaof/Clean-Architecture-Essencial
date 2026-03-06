@@ -19,6 +19,7 @@ namespace Application.Services
 
         public async Task CreateCategoryAsync(CategoryDTO categoryDto)
         {
+            categoryDto.Id = Guid.NewGuid();
             Category entity = _mapper.Map<Category>(categoryDto);
             await _repository.CreateAsync(entity);
         }
@@ -37,7 +38,7 @@ namespace Application.Services
 
         public async Task RemoveCategoryAsync(Guid id)
         {
-            Category entity = _repository.GetByIdAsync(id).Result;
+            Category entity = await _repository.GetByIdAsync(id);
             await _repository.RemoveAsync(entity);
         }
 
