@@ -7,8 +7,15 @@ namespace Domain.Entities
     [Table("Category")]
     public sealed class Category : BaseEntity
     {
-        public Category(Guid id, string name) : base(id)
+        public Category(string name)
         {
+            ValidateName(name);
+        }
+
+        public Category(Guid id, string name)
+        {
+            ExceptionValidation.When(id == Guid.Empty, "Invalid Id value.");
+            Id = id;
             ValidateName(name);
         }
 

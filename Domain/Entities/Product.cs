@@ -7,7 +7,15 @@ namespace Domain.Entities
     [Table("Product")]
     public sealed class Product : BaseEntity
     {
-        public Product(Guid id, string name, string description, decimal price, int stock, string image) : base(id)
+        public Product(Guid id, string name, string description, decimal price, int stock, string image)
+        {
+            ExceptionValidation.When(id == Guid.Empty, "The Id is required.");
+            Id = id;
+            ValidateName(name);
+            Validate(description, price, stock, image);
+        }
+
+        public Product(string name, string description, decimal price, int stock, string image)
         {
             ValidateName(name);
             Validate(description, price, stock, image);
