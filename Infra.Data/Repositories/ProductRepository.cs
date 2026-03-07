@@ -27,12 +27,7 @@ namespace Infra.Data.Repositories
 
         public async Task<Product> GetByIdAsync(Guid id)
         {
-            return await _context.products.FindAsync(id);
-        }
-
-        public Task<Product> GetProductCategoryAsync(Guid id)
-        {
-            return _context.products.Include(p => p.Category).SingleOrDefaultAsync(p => p.Id == id);
+            return await _context.products.Include(p => p.Category).SingleOrDefaultAsync(p => p.Id == id);
         }
 
         public async Task<Product> RemoveAsync(Product product)

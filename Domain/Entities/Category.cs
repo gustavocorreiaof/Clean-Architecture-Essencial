@@ -14,7 +14,7 @@ namespace Domain.Entities
 
         public Category(Guid id, string name)
         {
-            ExceptionValidation.When(id == Guid.Empty, "Invalid Id value.");
+            ExceptionValidation.When(id == Guid.Empty, "The Id is required.");
             Id = id;
             ValidateName(name);
         }
