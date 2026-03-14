@@ -7,5 +7,6 @@
   <Project Path="Infra.Data/Infra.Data.csproj" Id="ae3038e0-1aee-4ddf-99d6-c2b253ddad2c" />
   <Project Path="Infra.IoC/Infra.IoC.csproj" Id="05144e89-73f0-4503-b54c-936ce5c5153b" />
   <Project Path="Tests/Tests.csproj" Id="65ab5627-b84f-47fc-b145-b08eab28a3ff" />
+  <Project Path="WebAPI/WebAPI.csproj" Id="584329b8-c4c6-401d-b244-5fe29a3e2280" />
   <Project Path="WebUI/WebUI.csproj" Id="d224a995-b6e2-44c2-b725-0d2be9cc3c5e" />
 </Solution>
