@@ -1,6 +1,6 @@
 ﻿namespace Domain.Account
 {
-    public interface ISeetUserRoleInitial
+    public interface ISeedUserRoleInitial
     {
         void SeedUser();
         void SeedRole();

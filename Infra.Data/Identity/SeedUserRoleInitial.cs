@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Infra.Data.Identity
 {
-    public class SeedUserRoleInitial : ISeetUserRoleInitial
+    public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
