@@ -8,14 +8,13 @@ using Infra.Data.Identity;
 using Infra.Data.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Infra.IoC
 {
     public static class DependencyInjectionAPI
     {
-        public static IServiceCollection AddInfraestructureAPI(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfraestructureAPI(this IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Environment.GetEnvironmentVariable("DEV_DB"),

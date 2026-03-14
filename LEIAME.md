@@ -1,5 +1,7 @@
 ﻿# Clean Architecture Essencial
 
+🇺🇸 [Read in English](README.md)
+
 Projeto de estudo e referência que demonstra a implementação de **Clean Architecture** com **.NET 10**, combinando padrões modernos como **CQRS**, **Repository Pattern** e **MediatR** em uma aplicação real de gerenciamento de produtos e categorias.
 
 ## Arquitetura
@@ -43,6 +45,8 @@ O projeto segue os princípios da **Arquitetura Limpa (Clean Architecture)**, on
 - [MediatR](https://github.com/jbogard/MediatR) — implementação do padrão CQRS
 - [AutoMapper](https://automapper.org/) — mapeamento entre entidades, DTOs e Commands
 - [ASP.NET Core Identity](https://learn.microsoft.com/aspnet/core/security/authentication/identity) — autenticação e autorização com Roles
+- [JWT Bearer](https://learn.microsoft.com/aspnet/core/security/authentication/jwt-authn) — autenticação baseada em token para a API REST
+- [Scalar](https://scalar.com/) — UI interativa de documentação OpenAPI
 - [xUnit](https://xunit.net/) — testes unitários
 
 ## Padrões de Projeto
@@ -75,14 +79,20 @@ O projeto segue os princípios da **Arquitetura Limpa (Clean Architecture)**, on
 
 ### Variáveis de Ambiente
 
-A string de conexão com o banco de dados é lida a partir de uma variável de ambiente:
+A string de conexão com o banco de dados e as configurações do JWT são lidas a partir de variáveis de ambiente:
 
 ```bash
 # Windows (PowerShell)
-$env:DEV_DB = "Host=localhost;Database=CleanArchDb;Username=postgres;Password=sua_senha"
+$env:DEV_DB       = "Host=localhost;Database=CleanArchDb;Username=postgres;Password=sua_senha"
+$env:JWT_KEY      = "sua_chave_secreta_com_pelo_menos_32_caracteres"
+$env:JWT_ISSUER   = "seu_issuer"
+$env:JWT_AUDIENCE = "seu_audience"
 
 # Linux/macOS
 export DEV_DB="Host=localhost;Database=CleanArchDb;Username=postgres;Password=sua_senha"
+export JWT_KEY="sua_chave_secreta_com_pelo_menos_32_caracteres"
+export JWT_ISSUER="seu_issuer"
+export JWT_AUDIENCE="seu_audience"
 ```
 
 ### Migrations
@@ -105,7 +115,7 @@ dotnet run --project WebUI
 dotnet run --project WebAPI
 ```
 
-A documentação OpenAPI da API estará disponível em `https://localhost:{porta}/openapi` no ambiente de desenvolvimento.
+A documentação OpenAPI da API estará disponível em `https://localhost:{porta}/scalar/v1` no ambiente de desenvolvimento.
 
 ### Executando os Testes
 
@@ -113,9 +123,28 @@ A documentação OpenAPI da API estará disponível em `https://localhost:{porta
 dotnet test
 ```
 
-## 🔐 Autenticação
+## Autenticação
 
-A aplicação utiliza **ASP.NET Core Identity** com seed inicial de usuários e roles.
+### WebUI
+
+A interface web utiliza **ASP.NET Core Identity** com autenticação baseada em cookies e seed inicial de usuários e roles.
 
 - Ao iniciar o `WebUI`, os roles e usuários padrão são criados automaticamente via `SeedUserRoleInitial`.
 - O acesso negado redireciona para `/Account/Login`.
+
+### WebAPI — JWT
+
+A API REST é protegida com tokens **JWT Bearer**. As configurações do token são fornecidas via variáveis de ambiente (`JWT_KEY`, `JWT_ISSUER`, `JWT_AUDIENCE`).
+
+**Endpoints de token** (`/api/Token`):
+
+| Método | Endpoint | Auth obrigatória | Descrição |
+|--------|----------|:---:|-------------|
+| `POST` | `/api/Token/LoginUser` | Não | Autenticar e receber um token JWT |
+| `POST` | `/api/Token/CreateUser` | Sim | Registrar um novo usuário da API (somente admin) |
+
+Os tokens expiram após **10 minutos**. Inclua o token no cabeçalho `Authorization` das requisições subsequentes:
+
+```
+Authorization: Bearer <token>
+```
