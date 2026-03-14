@@ -33,7 +33,7 @@ namespace Infra.IoC
                 cfg.AddProfile<DTOToCommandMappingProfile>();
             });
 
-            services.AddIdentityCore<ApplicationUser>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 

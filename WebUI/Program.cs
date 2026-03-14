@@ -1,3 +1,4 @@
+using Domain.Account;
 using Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,14 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+app.UseAuthentication();
+
+using (var scope = app.Services.CreateScope())
+{
+    var seedUserRoleInitial = scope.ServiceProvider.GetRequiredService<ISeedUserRoleInitial>();
+    seedUserRoleInitial.SeedRole();
+    seedUserRoleInitial.SeedUser();
+}
 
 app.UseAuthorization();
 
